@@ -440,16 +440,16 @@
         fileManager = [[NSFileManager alloc] init];
         NSDirectoryEnumerator *dirEnumerator = [fileManager enumeratorAtPath:directoryPath];
         NSString *fileName;
-        int count = 0;
         while ((fileName = [dirEnumerator nextObject])) {
             BOOL isDir;
             NSString *fullFilePath = [directoryPath stringByAppendingPathComponent:fileName];
             [fileManager fileExistsAtPath:fullFilePath isDirectory:&isDir];
-            if (!isDir || count == 0) {
+            if (!isDir) {
                 if (keepParentDirectory)
                 {
                     fileName = [[directoryPath lastPathComponent] stringByAppendingPathComponent:fileName];
                 }
+                NSLog(@"ADDING FILE WITH PATH: %@ -- FILENAME: %@", fullFilePath, fileName);
                 [zipArchive writeFileAtPath:fullFilePath withFileName:fileName withPassword:password];
             }
             else
@@ -462,7 +462,6 @@
                     [[NSFileManager defaultManager] removeItemAtPath:tempName error:nil];
                 }
             }
-            count++;
         }
         success = [zipArchive close];
     }
