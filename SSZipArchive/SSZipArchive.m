@@ -449,7 +449,7 @@
                 {
                     fileName = [[directoryPath lastPathComponent] stringByAppendingPathComponent:fileName];
                 }
-                NSLog(@"ADDING FILE WITH PATH: %@ -- FILENAME: %@", fullFilePath, fileName);
+                NSLog(@"ADDING FILE WITH FILENAME: %@", fullFilePath, fileName);
                 [zipArchive writeFileAtPath:fullFilePath withFileName:fileName withPassword:password];
             }
             else
