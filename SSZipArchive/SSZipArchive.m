@@ -440,11 +440,12 @@
         fileManager = [[NSFileManager alloc] init];
         NSDirectoryEnumerator *dirEnumerator = [fileManager enumeratorAtPath:directoryPath];
         NSString *fileName;
+        int count = 0;
         while ((fileName = [dirEnumerator nextObject])) {
             BOOL isDir;
             NSString *fullFilePath = [directoryPath stringByAppendingPathComponent:fileName];
             [fileManager fileExistsAtPath:fullFilePath isDirectory:&isDir];
-            if (!isDir) {
+            if (!isDir || count == 0) {
                 if (keepParentDirectory)
                 {
                     fileName = [[directoryPath lastPathComponent] stringByAppendingPathComponent:fileName];
@@ -461,6 +462,7 @@
                     [[NSFileManager defaultManager] removeItemAtPath:tempName error:nil];
                 }
             }
+            count++;
         }
         success = [zipArchive close];
     }
